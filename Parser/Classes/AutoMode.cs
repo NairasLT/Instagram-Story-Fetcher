@@ -31,6 +31,16 @@ namespace Parser.Classes
                 Data data = cfg.Read(); //Read Config
                 List<StoryContent> CurrentStoryList = await GetStoryContentAsync(Session, User); //Download Stories
                 
+
+                if(CurrentStoryList == null)
+                {
+                    if (Display != null)
+                        Display.Items.Clear();
+
+                    await Task.Delay(TimeSpan.FromMinutes(30)); //SEND ALERT
+                    continue;
+                }
+
                 if(Display != null)
                 {
                     Display.Items.Clear();

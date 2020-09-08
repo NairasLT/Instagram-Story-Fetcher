@@ -6,42 +6,51 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows;
 using static Parser.MainWindow;
 
 namespace Parser.Classes
 {
     class MainModule
     {
+
+
+
         public static async Task<List<StoryContent>> GetStoryContentAsync(string SessionId, string UserId)
         {
             try
             {
                 List<StoryContent> storyContents = new List<StoryContent>();
-                string DecodedUrl = "{\"reel_ids\":[\"" + UserId + "\"],\"tag_names\":[],\"location_ids\":[],\"highlight_reel_ids\":[],\"precomposed_overlay\":false,\"show_story_viewer_list\":true,\"story_viewer_fetch_count\":50,\"story_viewer_cursor\":\"\",\"stories_video_dash_manifest\":false}";
 
-                var client = new RestClient($"https://www.instagram.com/graphql/query/?query_hash=90709b530ea0969f002c86a89b4f2b8d&variables={HttpUtility.UrlEncode(DecodedUrl)}");
+                var client = new RestClient($"https://i.instagram.com/api/v1/feed/user/{UserId}/reel_media/");
                 client.Timeout = -1;
                 var request = new RestRequest(Method.GET);
+                request.AddHeader("host", "i.instagram.com");
+                request.AddHeader("Connection", "keep-alive");
+                request.AddHeader("Accept", "*/*");
+                request.AddHeader("X-IG-Capabilities", "3wo=");
+                request.AddHeader("Accept-Language", "en-US;q=1");
+                request.AddHeader("Accept-Encoding", "gzip, deflate");
+                client.UserAgent = "Instagram 9.5.1 (iPhone9,2; iOS 10_0_2; en_US; en-US; scale=2.61; 1080x1920) AppleWebKit/420+";
+                request.AddHeader("X-IG-Connection-Type", "WiFi");
                 request.AddCookie("sessionid", SessionId);
                 IRestResponse response = await client.ExecuteAsync(request);
+
                 Instagram instagram = Instagram.FromJson(response.Content);
 
-                if (instagram.Data.ReelsMedia.Length <= 0)
+                if (instagram.Items == null)
                     return null;
 
-                if (instagram.Data.ReelsMedia[instagram.Data.ReelsMedia.Length - 1].Items.Length <= 0)
-                    return null;
-
-                foreach (var Story in instagram.Data.ReelsMedia[0].Items)
+                foreach (var Story in instagram.Items)
                 {
 
-                    if (Story.IsVideo)
-                        if (Story.VideoResources.Length > 0)
-                            storyContents.Add(new StoryContent(Story.VideoResources[Story.VideoResources.Length - 1].Src.ToString(), true, Story.Id));
+                    if (Story.MediaType == MediaType.Video)
+                        if (Story.VideoVersions.Length >= 0)
+                            storyContents.Add(new StoryContent(Story.VideoVersions[0].Url.ToString(), true, Story.Id));
 
-                    if (!Story.IsVideo)
-                        if (Story.DisplayResources.Length > 0)
-                            storyContents.Add(new StoryContent(Story.DisplayResources[Story.DisplayResources.Length - 1].Src.ToString(), false, Story.Id));
+                    if (Story.MediaType == MediaType.Image)
+                        if (Story.ImageVersions2.Candidates.Length >= 0)
+                            storyContents.Add(new StoryContent(Story.ImageVersions2.Candidates[0].Url.ToString(), false, Story.Id));
                 }
                 return storyContents;
             }

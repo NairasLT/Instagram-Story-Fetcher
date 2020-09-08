@@ -134,8 +134,11 @@ namespace Parser
             var res = MessageBox.Show("Activate 'Auto Mode' this mode checks the Instagram User with session id, downloads the story content, checks every 30 minutes, if the video/image has been already downloaded it will not download the video/image.", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (res == MessageBoxResult.No)
+            {
+                IsAutoCheckBox.IsChecked = false;
                 return;
-            
+            }
+
             var cfg = new Config<Data>(LocalConfig);
             var old = cfg.Read();
             old.IsAuto = true; ;

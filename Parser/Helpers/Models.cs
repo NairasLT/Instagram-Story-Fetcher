@@ -10,247 +10,199 @@ namespace QuickType
 {
     using System;
     using System.Collections.Generic;
+
     using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-
+    public enum MediaType
+    {
+        Image = 1,
+        Video = 2
+    }
     public partial class Instagram
     {
-        [JsonProperty("data")]
-        public Data Data { get; set; }
-
-        [JsonProperty("status")]
-        public string Status { get; set; }
-    }
-
-    public partial class Data
-    {
-        [JsonProperty("reels_media")]
-        public ReelsMedia[] ReelsMedia { get; set; }
-    }
-
-    public partial class ReelsMedia
-    {
-        [JsonProperty("__typename")]
-        public string Typename { get; set; }
-
         [JsonProperty("id")]
-        [JsonConverter(typeof(ParseStringConverter))]
         public long Id { get; set; }
 
         [JsonProperty("latest_reel_media")]
         public long LatestReelMedia { get; set; }
 
-        [JsonProperty("can_reply")]
-        public bool CanReply { get; set; }
-
-        [JsonProperty("owner")]
-        public Owner Owner { get; set; }
-
-        [JsonProperty("can_reshare")]
-        public bool CanReshare { get; set; }
-
         [JsonProperty("expiring_at")]
         public long ExpiringAt { get; set; }
-
-        [JsonProperty("has_besties_media")]
-        public object HasBestiesMedia { get; set; }
-
-        [JsonProperty("has_pride_media")]
-        public bool HasPrideMedia { get; set; }
 
         [JsonProperty("seen")]
         public long Seen { get; set; }
 
+        [JsonProperty("can_reply")]
+        public bool CanReply { get; set; }
+
+        [JsonProperty("can_gif_quick_reply")]
+        public bool CanGifQuickReply { get; set; }
+
+        [JsonProperty("can_reshare")]
+        public bool CanReshare { get; set; }
+
+        [JsonProperty("reel_type")]
+        public string ReelType { get; set; }
+
+        [JsonProperty("is_sensitive_vertical_ad")]
+        public bool IsSensitiveVerticalAd { get; set; }
+
         [JsonProperty("user")]
-        public Owner User { get; set; }
+        public InstagramUser User { get; set; }
 
         [JsonProperty("items")]
         public Item[] Items { get; set; }
+
+        [JsonProperty("prefetch_count")]
+        public long PrefetchCount { get; set; }
+
+        [JsonProperty("has_besties_media")]
+        public bool HasBestiesMedia { get; set; }
+
+        [JsonProperty("media_count")]
+        public long MediaCount { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
     }
 
     public partial class Item
     {
-        [JsonProperty("audience")]
-        public string Audience { get; set; }
+        [JsonProperty("taken_at")]
+        public long TakenAt { get; set; }
 
-        [JsonProperty("edge_story_media_viewers")]
-        public EdgeStoryMediaViewers EdgeStoryMediaViewers { get; set; }
-
-        [JsonProperty("__typename")]
-        public string Typename { get; set; }
+        [JsonProperty("pk")]
+        public double Pk { get; set; }
 
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        [JsonProperty("dimensions")]
-        public Dimensions Dimensions { get; set; }
+        [JsonProperty("device_timestamp")]
+        public long DeviceTimestamp { get; set; }
 
-        [JsonProperty("display_resources")]
-        public DisplayResource[] DisplayResources { get; set; }
+        [JsonProperty("media_type")]
+        public MediaType MediaType { get; set; }
 
-        [JsonProperty("display_url")]
-        public Uri DisplayUrl { get; set; }
+        [JsonProperty("code")]
+        public string Code { get; set; }
 
-        [JsonProperty("media_preview")]
-        public string MediaPreview { get; set; }
+        [JsonProperty("client_cache_key")]
+        public string ClientCacheKey { get; set; }
 
-        [JsonProperty("gating_info")]
-        public object GatingInfo { get; set; }
+        [JsonProperty("filter_type")]
+        public long FilterType { get; set; }
 
-        [JsonProperty("fact_check_overall_rating")]
-        public object FactCheckOverallRating { get; set; }
+        [JsonProperty("user")]
+        public ItemUser User { get; set; }
 
-        [JsonProperty("fact_check_information")]
-        public object FactCheckInformation { get; set; }
+        [JsonProperty("caption_is_edited")]
+        public bool CaptionIsEdited { get; set; }
 
-        [JsonProperty("media_overlay_info")]
-        public object MediaOverlayInfo { get; set; }
+        [JsonProperty("image_versions2")]
+        public ImageVersions2 ImageVersions2 { get; set; }
 
-        [JsonProperty("sensitivity_friction_info")]
-        public object SensitivityFrictionInfo { get; set; }
+        [JsonProperty("original_width")]
+        public long OriginalWidth { get; set; }
 
-        [JsonProperty("taken_at_timestamp")]
-        public long TakenAtTimestamp { get; set; }
+        [JsonProperty("original_height")]
+        public long OriginalHeight { get; set; }
 
-        [JsonProperty("expiring_at_timestamp")]
-        public long ExpiringAtTimestamp { get; set; }
+        [JsonProperty("caption_position")]
+        public long CaptionPosition { get; set; }
 
-        [JsonProperty("story_cta_url")]
-        public object StoryCtaUrl { get; set; }
+        [JsonProperty("is_reel_media")]
+        public bool IsReelMedia { get; set; }
 
-        [JsonProperty("story_view_count")]
-        public object StoryViewCount { get; set; }
+        [JsonProperty("photo_of_you")]
+        public bool PhotoOfYou { get; set; }
 
-        [JsonProperty("is_video")]
-        public bool IsVideo { get; set; }
+        [JsonProperty("can_see_insights_as_brand")]
+        public bool CanSeeInsightsAsBrand { get; set; }
 
-        [JsonProperty("owner")]
-        public Owner Owner { get; set; }
+        [JsonProperty("video_versions")]
+        public VideoVersion[] VideoVersions { get; set; }
 
-        [JsonProperty("tracking_token")]
-        public string TrackingToken { get; set; }
+        [JsonProperty("has_audio")]
+        public bool HasAudio { get; set; }
 
-        [JsonProperty("tappable_objects")]
-        public TappableObject[] TappableObjects { get; set; }
+        [JsonProperty("video_duration")]
+        public double VideoDuration { get; set; }
 
-        [JsonProperty("story_app_attribution")]
-        public object StoryAppAttribution { get; set; }
+        [JsonProperty("caption")]
+        public object Caption { get; set; }
 
-        [JsonProperty("edge_media_to_sponsor_user")]
-        public EdgeMediaToSponsorUser EdgeMediaToSponsorUser { get; set; }
+        [JsonProperty("organic_tracking_token")]
+        public string OrganicTrackingToken { get; set; }
 
-        [JsonProperty("muting_info")]
-        public object MutingInfo { get; set; }
+        [JsonProperty("expiring_at")]
+        public long ExpiringAt { get; set; }
 
-        [JsonProperty("has_audio", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? HasAudio { get; set; }
+        [JsonProperty("sharing_friction_info")]
+        public SharingFrictionInfo SharingFrictionInfo { get; set; }
 
-        [JsonProperty("overlay_image_resources")]
-        public object OverlayImageResources { get; set; }
+        [JsonProperty("is_in_profile_grid")]
+        public bool IsInProfileGrid { get; set; }
 
-        [JsonProperty("video_duration", NullValueHandling = NullValueHandling.Ignore)]
-        public double? VideoDuration { get; set; }
+        [JsonProperty("profile_grid_control_enabled")]
+        public bool ProfileGridControlEnabled { get; set; }
 
-        [JsonProperty("video_resources", NullValueHandling = NullValueHandling.Ignore)]
-        public VideoResource[] VideoResources { get; set; }
+        [JsonProperty("is_shop_the_look_eligible")]
+        public bool IsShopTheLookEligible { get; set; }
+
+        [JsonProperty("deleted_reason")]
+        public long DeletedReason { get; set; }
+
+        [JsonProperty("can_reshare")]
+        public bool CanReshare { get; set; }
+
+        [JsonProperty("can_reply")]
+        public bool CanReply { get; set; }
+
+        [JsonProperty("supports_reel_reactions")]
+        public bool SupportsReelReactions { get; set; }
+
+        [JsonProperty("can_send_custom_emojis")]
+        public bool CanSendCustomEmojis { get; set; }
+
+        [JsonProperty("show_one_tap_fb_share_tooltip")]
+        public bool ShowOneTapFbShareTooltip { get; set; }
     }
 
-    public partial class Dimensions
+    public partial class ImageVersions2
     {
+        [JsonProperty("candidates")]
+        public Candidate[] Candidates { get; set; }
+    }
+
+    public partial class Candidate
+    {
+        [JsonProperty("width")]
+        public long Width { get; set; }
+
         [JsonProperty("height")]
         public long Height { get; set; }
 
-        [JsonProperty("width")]
-        public long Width { get; set; }
+        [JsonProperty("url")]
+        public Uri Url { get; set; }
+
+        [JsonProperty("scans_profile")]
+        public string ScansProfile { get; set; }
     }
 
-    public partial class DisplayResource
+    public partial class SharingFrictionInfo
     {
-        [JsonProperty("src")]
-        public Uri Src { get; set; }
+        [JsonProperty("should_have_sharing_friction")]
+        public bool ShouldHaveSharingFriction { get; set; }
 
-        [JsonProperty("config_width")]
-        public long ConfigWidth { get; set; }
-
-        [JsonProperty("config_height")]
-        public long ConfigHeight { get; set; }
+        [JsonProperty("bloks_app_url")]
+        public object BloksAppUrl { get; set; }
     }
 
-    public partial class EdgeMediaToSponsorUser
+    public partial class ItemUser
     {
-        [JsonProperty("edges")]
-        public object[] Edges { get; set; }
-    }
-
-    public partial class EdgeStoryMediaViewers
-    {
-        [JsonProperty("count")]
-        public long Count { get; set; }
-
-        [JsonProperty("page_info")]
-        public PageInfo PageInfo { get; set; }
-
-        [JsonProperty("edges")]
-        public object[] Edges { get; set; }
-    }
-
-    public partial class PageInfo
-    {
-        [JsonProperty("has_next_page")]
-        public bool HasNextPage { get; set; }
-
-        [JsonProperty("end_cursor")]
-        public object EndCursor { get; set; }
-    }
-
-    public partial class Owner
-    {
-        [JsonProperty("id")]
-        [JsonConverter(typeof(ParseStringConverter))]
-        public long Id { get; set; }
-
-        [JsonProperty("profile_pic_url")]
-        public Uri ProfilePicUrl { get; set; }
-
-        [JsonProperty("username")]
-        public string Username { get; set; }
-
-        [JsonProperty("followed_by_viewer")]
-        public bool FollowedByViewer { get; set; }
-
-        [JsonProperty("requested_by_viewer")]
-        public bool RequestedByViewer { get; set; }
-
-        [JsonProperty("__typename", NullValueHandling = NullValueHandling.Ignore)]
-        public string Typename { get; set; }
-    }
-
-    public partial class TappableObject
-    {
-        [JsonProperty("__typename")]
-        public string Typename { get; set; }
-
-        [JsonProperty("x")]
-        public double X { get; set; }
-
-        [JsonProperty("y")]
-        public double Y { get; set; }
-
-        [JsonProperty("width")]
-        public double Width { get; set; }
-
-        [JsonProperty("height")]
-        public double Height { get; set; }
-
-        [JsonProperty("rotation")]
-        public double Rotation { get; set; }
-
-        [JsonProperty("custom_title")]
-        public object CustomTitle { get; set; }
-
-        [JsonProperty("attribution")]
-        public object Attribution { get; set; }
+        [JsonProperty("pk")]
+        public long Pk { get; set; }
 
         [JsonProperty("username")]
         public string Username { get; set; }
@@ -260,38 +212,112 @@ namespace QuickType
 
         [JsonProperty("is_private")]
         public bool IsPrivate { get; set; }
+
+        [JsonProperty("profile_pic_url")]
+        public Uri ProfilePicUrl { get; set; }
+
+        [JsonProperty("profile_pic_id")]
+        public string ProfilePicId { get; set; }
+
+        [JsonProperty("is_verified")]
+        public bool IsVerified { get; set; }
+
+        [JsonProperty("has_anonymous_profile_picture")]
+        public bool HasAnonymousProfilePicture { get; set; }
+
+        [JsonProperty("is_unpublished")]
+        public bool IsUnpublished { get; set; }
+
+        [JsonProperty("is_favorite")]
+        public bool IsFavorite { get; set; }
+
+        [JsonProperty("account_badges")]
+        public object[] AccountBadges { get; set; }
     }
 
-    public partial class VideoResource
+    public partial class VideoVersion
     {
-        [JsonProperty("src")]
-        public Uri Src { get; set; }
+        [JsonProperty("type")]
+        public long Type { get; set; }
 
-        [JsonProperty("config_width")]
-        public long ConfigWidth { get; set; }
+        [JsonProperty("width")]
+        public long Width { get; set; }
 
-        [JsonProperty("config_height")]
-        public long ConfigHeight { get; set; }
+        [JsonProperty("height")]
+        public long Height { get; set; }
 
-        [JsonProperty("mime_type")]
-        public MimeType MimeType { get; set; }
+        [JsonProperty("url")]
+        public Uri Url { get; set; }
 
-        [JsonProperty("profile")]
-        public Profile Profile { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
     }
 
-    public enum MimeType { VideoMp4CodecsAvc142E01EMp4A402, VideoMp4CodecsAvc14D401EMp4A402 };
+    public partial class InstagramUser
+    {
+        [JsonProperty("pk")]
+        public long Pk { get; set; }
 
-    public enum Profile { Baseline, Main };
+        [JsonProperty("username")]
+        public string Username { get; set; }
+
+        [JsonProperty("full_name")]
+        public string FullName { get; set; }
+
+        [JsonProperty("is_private")]
+        public bool IsPrivate { get; set; }
+
+        [JsonProperty("profile_pic_url")]
+        public Uri ProfilePicUrl { get; set; }
+
+        [JsonProperty("profile_pic_id")]
+        public string ProfilePicId { get; set; }
+
+        [JsonProperty("friendship_status")]
+        public FriendshipStatus FriendshipStatus { get; set; }
+
+        [JsonProperty("is_verified")]
+        public bool IsVerified { get; set; }
+    }
+
+    public partial class FriendshipStatus
+    {
+        [JsonProperty("following")]
+        public bool Following { get; set; }
+
+        [JsonProperty("followed_by")]
+        public bool FollowedBy { get; set; }
+
+        [JsonProperty("blocking")]
+        public bool Blocking { get; set; }
+
+        [JsonProperty("muting")]
+        public bool Muting { get; set; }
+
+        [JsonProperty("is_private")]
+        public bool IsPrivate { get; set; }
+
+        [JsonProperty("incoming_request")]
+        public bool IncomingRequest { get; set; }
+
+        [JsonProperty("outgoing_request")]
+        public bool OutgoingRequest { get; set; }
+
+        [JsonProperty("is_bestie")]
+        public bool IsBestie { get; set; }
+
+        [JsonProperty("is_restricted")]
+        public bool IsRestricted { get; set; }
+    }
 
     public partial class Instagram
     {
-        public static Instagram FromJson(string json) => JsonConvert.DeserializeObject<Instagram>(json, Converter.Settings);
+        public static Instagram FromJson(string json) => JsonConvert.DeserializeObject<Instagram>(json, QuickType.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this Instagram self) => JsonConvert.SerializeObject(self, Converter.Settings);
+        public static string ToJson(this Instagram self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
     }
 
     internal static class Converter
@@ -302,123 +328,8 @@ namespace QuickType
             DateParseHandling = DateParseHandling.None,
             Converters =
             {
-                MimeTypeConverter.Singleton,
-                ProfileConverter.Singleton,
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };
-    }
-
-    internal class ParseStringConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(long) || t == typeof(long?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            long l;
-            if (Int64.TryParse(value, out l))
-            {
-                return l;
-            }
-            throw new Exception("Cannot unmarshal type long");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (long)untypedValue;
-            serializer.Serialize(writer, value.ToString());
-            return;
-        }
-
-        public static readonly ParseStringConverter Singleton = new ParseStringConverter();
-    }
-
-    internal class MimeTypeConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(MimeType) || t == typeof(MimeType?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case "video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"":
-                    return MimeType.VideoMp4CodecsAvc142E01EMp4A402;
-                case "video/mp4; codecs=\"avc1.4D401E, mp4a.40.2\"":
-                    return MimeType.VideoMp4CodecsAvc14D401EMp4A402;
-            }
-            throw new Exception("Cannot unmarshal type MimeType");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (MimeType)untypedValue;
-            switch (value)
-            {
-                case MimeType.VideoMp4CodecsAvc142E01EMp4A402:
-                    serializer.Serialize(writer, "video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"");
-                    return;
-                case MimeType.VideoMp4CodecsAvc14D401EMp4A402:
-                    serializer.Serialize(writer, "video/mp4; codecs=\"avc1.4D401E, mp4a.40.2\"");
-                    return;
-            }
-            throw new Exception("Cannot marshal type MimeType");
-        }
-
-        public static readonly MimeTypeConverter Singleton = new MimeTypeConverter();
-    }
-
-    internal class ProfileConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(Profile) || t == typeof(Profile?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case "BASELINE":
-                    return Profile.Baseline;
-                case "MAIN":
-                    return Profile.Main;
-            }
-            throw new Exception("Cannot unmarshal type Profile");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (Profile)untypedValue;
-            switch (value)
-            {
-                case Profile.Baseline:
-                    serializer.Serialize(writer, "BASELINE");
-                    return;
-                case Profile.Main:
-                    serializer.Serialize(writer, "MAIN");
-                    return;
-            }
-            throw new Exception("Cannot marshal type Profile");
-        }
-
-        public static readonly ProfileConverter Singleton = new ProfileConverter();
     }
 }
