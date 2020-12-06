@@ -1,13 +1,7 @@
-# About
-This applicaton can fetch and download instagram stories with specified Session Id.
+#### Features
+##### Download instagram stories with specified Session Id and stores them.
+##### Auto mode, check stories every 30 minutes, and downloads them if not already.
 
 
-
-
-## Auto Mode
-Automatically downloads the stories for currently specified user,
-Fetches Every 30 Minutes If the story has been already downloaded the application skips it.
-
-
-## Session Id
-Is Used for if you want get stories from user that your account can only access / needs privileges.
+#### Instagram Session Id
+##### Is your account session cookie, this is needed to fetch stories who can only access followers or allowed accounts.
